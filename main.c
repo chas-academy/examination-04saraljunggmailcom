@@ -1,74 +1,68 @@
-#include <stdio.h>
-#include <string.h>
+        #include <stdio.h>
 
-// Calculates the average score from an array of integers
-float calculate_average(int scores[], int count) {
-int sum = 0;
-for (int i = 0; i < count; i++) {
-sum += scores[i];
-}
-return (float)sum / count;
-}
+        float print_average(char name[]){
+            int score, sum = 0;
+            for (int i = 0; i < 13; i++){
+                scanf("%d", &score);
+                sum += score;
+            }
+            float average = sum / 13.0f;
+             return average;
+            
+            }
 
-// Capitalizes the first letter of a name (if it's lowercase)
-void capitalize_first_letter(char name[]) {
-if (name[0] >= 'a' && name[0] <= 'z') {
-name[0] = name[0] - ('a' - 'A');
-}
-}
+            static void cap(char s[]){
+                if (s[0] >= 'a' && s[0] <= 'z') s[0] -= 32;
+                for (int i = 1; s[i]; i++)
+                if (s[i] >= 'A' && s[i] <= 'Z') s[i] += 32;
+            }
+            
+            int main(void) {
+                char name1[11];
+                char name2[11];
+                char name3[11];
+                char name4[11];
+                char name5[11];
 
-int main() {
-// 5 students, 13 test scores each
-char names[5][11] = {
-"alice",
-"karl",
-"nils",
-"anton",
-"selma"
-};
+                scanf("%10s", name1);
+                cap(name1);
+                float m1 = print_average(name1);
+               
+                scanf("%10s", name2);
+                cap(name2);
+                float m2 = print_average(name2);
+                
+                scanf("%10s", name3);
+                cap(name3);
+               float m3 = print_average(name3);
+              
+                scanf("%10s", name4);
+                cap(name4);
+               float m4 = print_average(name4);
 
-int scores[5][13] = {
-{8, 9, 7, 6, 10, 9, 8, 7, 10, 10, 9, 10, 8}, // Alice
-{5, 5, 6, 4, 6, 5, 5, 5, 5, 5, 4, 5, 10}, // Karl
-{4, 3, 5, 4, 5, 4, 5, 4, 4, 4, 4, 4, 4}, // Nils
-{10, 9, 9, 10, 9, 10, 10, 9, 10, 10, 9, 9, 10}, // Anton
-{7, 6, 7, 8, 7, 6, 7, 7, 6, 7, 7, 6, 7} // Selma
-};
+               scanf("%10s", name5);
+               cap(name5);
+               float m5 = print_average(name5);
 
-float averages[5];
+                char *bestName = name1;
+                float bestAvg = m1;
+                if (m2 > bestAvg) { bestAvg = m2; bestName = name2;}
+                if (m3 > bestAvg) { bestAvg = m3; bestName = name3;}
+                if (m4 > bestAvg) { bestAvg = m4; bestName = name4;}
+                if (m5 > bestAvg) { bestAvg = m5; bestName = name5;}
 
-// Capitalize names and calculate average scores
-for (int i = 0; i < 5; i++) {
-capitalize_first_letter(names[i]);
-averages[i] = calculate_average(scores[i], 13);
-}
+                printf("%s\n", bestName);
 
-// Step 1: Find the student with the highest average
-int highest_index = 0;
-for (int i = 1; i < 5; i++) {
-if (averages[i] > averages[highest_index]) {
-highest_index = i;
-}
-}
+                float groupAvg = (m1 + m2 + m3 + m4 + m5) / 5.0f;
+                if (m1 < groupAvg) printf("%s\n", name1);
+                if (m2 < groupAvg) printf("%s\n", name2);
+                if (m3 < groupAvg) printf("%s\n", name3);
+                if (m4 < groupAvg) printf("%s\n", name4);
+                if (m5 < groupAvg) printf("%s\n", name5);
 
-// Print the student with the highest average
-printf("Step 1 - Student with highest average score:\n");
-printf("%s\n\n", names[highest_index]);
 
-// Step 2: Print students with below-average scores
-float total = 0;
-for (int i = 0; i < 5; i++) {
-total += averages[i];
-}
-float group_average = total / 5;
 
-printf("Step 2 - Students below group average:\n");
-for (int i = 0; i < 5; i++) {
-if (averages[i] < group_average) {
-printf("%s\n", names[i]);
-}
-}
 
-return 0;
-}
+            return 0;
+        }
 
